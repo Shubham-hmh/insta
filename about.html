@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Our Automation App</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: #f0f2f5; color: #1c1e21; line-height: 1.6; }
+        
+        .header { 
+            background: linear-gradient(135deg, #0064e0, #0052cc); 
+            color: #fff; 
+            padding: 80px 20px; 
+            text-align: center; 
+        }
+        .header h1 { font-size: 42px; margin-bottom: 15px; letter-spacing: -0.5px; }
+        .header p { font-size: 20px; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+        
+        .container { 
+            max-width: 800px; 
+            margin: -40px auto 40px; 
+            padding: 40px; 
+            background: #fff; 
+            border-radius: 16px; 
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08); 
+            position: relative;
+        }
+        
+        .content h2 { color: #0064e0; margin-bottom: 20px; margin-top: 40px; font-size: 28px;}
+        .content h2:first-child { margin-top: 0; }
+        .content p { margin-bottom: 24px; color: #444; font-size: 17px; line-height: 1.8; }
+        
+        .feature-list { list-style: none; margin-bottom: 30px; }
+        .feature-list li { margin-bottom: 16px; padding-left: 32px; position: relative; font-size: 17px; color: #444; }
+        .feature-list li::before { 
+            content: '✓'; 
+            position: absolute; 
+            left: 0; 
+            color: #fff; 
+            background: #0064e0;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold; 
+            top: 4px;
+        }
+        
+        .footer { text-align: center; padding: 20px; color: #8e8e8e; font-size: 14px; margin-bottom: 20px;}
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Building the Future of Automation</h1>
+        <p>A sneak peek into the platform that will change how you work.</p>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <h2>Welcome to our Development Blog!</h2>
+            <p>Thank you for logging in. You've successfully authenticated and gained exclusive early access to our development diary. We are currently working hard behind the scenes to launch a revolutionary new automation app designed to save you hours of manual work every week.</p>
+            
+            <h2>What We Are Launching</h2>
+            <p>Our upcoming platform focuses on simplifying complex tasks by tying your favorite services together. Here are a few features we are finalizing for the launch:</p>
+            <ul class="feature-list">
+                <li><strong>Smart Workflows:</strong> Connect your favorite tools and let the app handle the data transfer automatically without writing any code.</li>
+                <li><strong>Real-time Analytics:</strong> Monitor your automated tasks with a beautiful, easy-to-read dashboard.</li>
+                <li><strong>Custom Triggers:</strong> Set up advanced conditional rules for when and how your automations should run.</li>
+            </ul>
+
+            <h2>Stay Tuned for More</h2>
+            <p>We will be posting regular updates, technical deep-dives, and behind-the-scenes content on this blog as we get closer to our beta launch. Check back soon for sneak peeks of the user interface!</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2024 Automation App Team. All rights reserved.
+    </div>
+
+</body>
+</html>

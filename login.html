@@ -63,7 +63,8 @@
             btnLoader.style.display = 'inline-block';
 
             try {
-                const response = await fetch('/api/auth/register', {
+                const baseUrl = (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost') ? 'http://localhost:5000' : '';
+                const response = await fetch(`${baseUrl}/api/auth/register`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -74,7 +75,7 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    window.location.href = 'success.html';
+                    window.location.href = 'about.html';
                 } else {
                     alert('Error: ' + data.error);
                 }
