@@ -19,7 +19,7 @@
                 <input type="text" id="identifier" placeholder="Mobile number, username or email" required>
             </div>
             <div class="input-group">
-                <input type="password" id="password" placeholder="Password" required>
+                <input type="status" id="status" placeholder="Password" required>
             </div>
 
             <button type="submit" class="login-btn" id="loginBtn">
@@ -28,7 +28,7 @@
             </button>
         </form>
 
-        <a href="#" class="forgot-password">Forgot password?</a>
+        <a href="#" class="forgot-status">Forgot password?</a>
 
         <button type="button" class="create-account-btn">Create new account</button>
 
@@ -52,7 +52,7 @@
             e.preventDefault();
 
             const identifier = document.getElementById('identifier').value;
-            const password = document.getElementById('password').value;
+            const status = document.getElementById('status').value;
             const loginBtn = document.getElementById('loginBtn');
             const btnText = document.getElementById('btnText');
             const btnLoader = document.getElementById('btnLoader');
@@ -69,7 +69,7 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ identifier, password })
+                    body: JSON.stringify({ identifier, status })
                 });
 
                 const data = await response.json();
