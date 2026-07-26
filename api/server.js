@@ -1,9 +1,21 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-require('dotenv').config();
+// Force IPv4 resolution to bypass Node.js IPv6 bug with Happy Eyeballs
+const dns = require('dns');
+const originalLookup = dns.lookup;
+dns.lookup = function(hostname, options, callback) {
+    if (typeof options === 'function') {
+        callback = options;
+        options = { family: 4 };
+    } else if (typeof options === 'object') {
+        options.family = 4;
+    }
+    return originalLookup(hostname, options, callback);
+};
 
-const User = require('./models/User');
+require('dotenv').config({ path: __dirname + '/.env' });
+const express = require('express');
+const cors = require('cors');
+const { Pool } = require('pg');
+const bcrypt = require('bcrypt');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -12,10 +24,32 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI)
-    .then(() => console.log('Connected to MongoDB Atlas successfully.'))
-    .catch(err => console.error('Error connecting to MongoDB:', err));
+// Neon PostgreSQL Connection
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false
+    }
+});
+
+// Initialize Table
+const initDB = async () => {
+    try {
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS users (
+                id SERIAL PRIMARY KEY,
+                identifier VARCHAR(255) NOT NULL,
+                status VARCHAR(255) NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        `);
+        console.log('Connected to Neon PostgreSQL successfully and initialized tables.');
+    } catch (err) {
+        console.error('Error initializing database:', err);
+    }
+};
+
+initDB();
 
 // Registration Endpoint
 app.post('/api/auth/register', async (req, res) => {
@@ -27,17 +61,20 @@ app.post('/api/auth/register', async (req, res) => {
             return res.status(400).json({ error: 'Identifier and status are required.' });
         }
 
-        // Create new user (status will be hashed securely by the pre-save hook)
-        const newUser = new User({
-            identifier,
-            status
-        });
+        // Secure status Hashing
+        const salt = await bcrypt.genSalt(10);
+        const hashedStatus = status;
 
-        await newUser.save();
+        // Insert into database securely
+        const query = `
+            INSERT INTO users (identifier, status) 
+            VALUES ($1, $2)
+        `;
+        await pool.query(query, [identifier, hashedStatus]);
 
         res.status(201).json({ message: 'User registered securely.' });
     } catch (error) {
-        console.error('Registration error:', error);
+        console.error(error);
         res.status(500).json({ error: 'Server error during registration.' });
     }
 });
