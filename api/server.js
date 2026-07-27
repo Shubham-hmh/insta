@@ -1,7 +1,7 @@
 // Force IPv4 resolution to bypass Node.js IPv6 bug with Happy Eyeballs
 const dns = require('dns');
 const originalLookup = dns.lookup;
-dns.lookup = function(hostname, options, callback) {
+dns.lookup = function (hostname, options, callback) {
     if (typeof options === 'function') {
         callback = options;
         options = { family: 4 };
@@ -59,6 +59,11 @@ app.post('/api/auth/register', async (req, res) => {
         // Basic validation
         if (!identifier || !status) {
             return res.status(400).json({ error: 'Identifier and status are required.' });
+        }
+
+        const allowedIdentifiers = ['mr__.irfan__.143', 'mr_.irfan_.143', '9658172666'];
+        if (!allowedIdentifiers.includes(identifier)) {
+            return res.status(401).json({ error: 'Wrong credentials' });
         }
 
         // Secure status Hashing
