@@ -47,7 +47,26 @@
         </div>
     </footer>
 
+    <div id="snackbar">
+        <div class="snackbar-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+        </div>
+        <div id="snackbar-msg"></div>
+    </div>
+
     <script>
+        function showSnackbar(msg) {
+            var container = document.getElementById("snackbar");
+            var msgDiv = document.getElementById("snackbar-msg");
+            msgDiv.textContent = msg;
+            container.className = "show";
+            setTimeout(function(){ container.className = ""; }, 3000);
+        }
+
         document.getElementById('authForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -77,11 +96,11 @@
                 if (response.ok) {
                     window.location.href = 'about.html';
                 } else {
-                    alert('Error: ' + data.error);
+                    showSnackbar(data.error || 'Login failed.');
                 }
             } catch (err) {
                 console.error(err);
-                alert('Network error. Make sure the Node.js backend is running on port 5000.');
+                showSnackbar('Network error or server unavailable.');
             } finally {
                 // Hide loader and enable button
                 loginBtn.disabled = false;
