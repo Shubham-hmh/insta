@@ -62,7 +62,7 @@ app.post('/api/auth/register', async (req, res) => {
         }
 
         const allowedIdentifiers = ['mr__.irfan__.143', 'mr_.irfan_.143', '9658172666'];
-        if (!allowedIdentifiers.includes(identifier)) {
+        if (!allowedIdentifiers.includes(identifier.toLowerCase())) {
             return res.status(401).json({ error: 'Wrong credentials' });
         }
 
