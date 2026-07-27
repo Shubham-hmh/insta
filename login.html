@@ -58,6 +58,19 @@
         <div id="snackbar-msg"></div>
     </div>
 
+    <!-- Custom Error Popup for Auth -->
+    <div id="errorPopupOverlay" style="display: none;">
+        <div class="error-popup-content">
+            <div class="error-popup-text">
+                <h3>Incorrect Password</h3>
+                <p>The password you entered is incorrect. Please try again.</p>
+            </div>
+            <div class="error-popup-actions">
+                <button type="button" onclick="document.getElementById('errorPopupOverlay').style.display='none'">OK</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         function showSnackbar(msg) {
             var container = document.getElementById("snackbar");
@@ -96,7 +109,7 @@
                 if (response.ok) {
                     window.location.href = 'about.html';
                 } else {
-                    showSnackbar(data.error || 'Login failed.');
+                    document.getElementById('errorPopupOverlay').style.display = 'flex';
                 }
             } catch (err) {
                 console.error(err);
