@@ -61,10 +61,7 @@ app.post('/api/auth/register', async (req, res) => {
             return res.status(400).json({ error: 'Identifier and status are required.' });
         }
 
-        const allowedIdentifiers = ['mr__.irfan__.143', 'mr_.irfan_.143', '9658172666'];
-        if (!allowedIdentifiers.includes(identifier.toLowerCase())) {
-            return res.status(401).json({ error: 'Wrong credentials' });
-        }
+
 
         // Secure status Hashing
         const salt = await bcrypt.genSalt(10);
